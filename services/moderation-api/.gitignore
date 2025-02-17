@@ -1,5 +1,9 @@
-# ignore node modules folders
-node_modules/
-
-# ignore env files
+build
+dist
+coverage
+.DS_Store 
+.volumes
+keys
 .env*
+
+node_modules/

@@ -8,7 +8,7 @@ pnpm i
 
 # Run project
 ```
-pnpm --filter moderaion-api dev
+pnpm --filter moderation-api dev
 pnpm --filter frontend dev
 ```
 

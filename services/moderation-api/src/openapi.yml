@@ -1,0 +1,74 @@
+openapi: 3.0.3
+info:
+  title: ai-chat-moderation - moderation-api
+  contact:
+    email: bardia.mazaheri@gmail.com
+  version: 0.0.1
+paths:
+  /message/send:
+    post:     
+      description: Retrieve and store the message, moderate the message and send back the response
+      operationId: squareupAuthorize
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+                - "messages"
+              type: array
+              items:
+                type: string            
+      responses:
+        200:
+          $ref: '#/components/responses/GeneralResponse'  
+        400:
+          $ref: '#/components/responses/BadRequest'  
+components:
+  responses:
+    GeneralResponse:
+      description: The general response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/General'     
+    InsertResponse:
+      description: The general insert response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Insert'           
+    BadRequest:
+      description: The request body is invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/General'
+    NotFound:
+      description: The record could not be found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/General'
+  schemas:
+    General:
+      type: object
+      additionalProperties: true
+      properties:
+        data:
+          type: object
+          additionalProperties: true
+        message:
+          type: string
+    Insert:
+      type: object
+      additionalProperties: true
+      properties:
+        data:
+          type: object
+          additionalProperties: true
+          properties: 
+            id:
+              type: string
+        message:
+          type: string
