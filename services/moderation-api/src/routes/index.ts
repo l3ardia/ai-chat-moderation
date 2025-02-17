@@ -1,5 +1,8 @@
 import express from "express";
+import * as message from './message'
 
-const indexRouter = express.Router();
+const router = express.Router();
 
-export default indexRouter;
+router.post('/message/send', message.send.post);
+
+export default router;

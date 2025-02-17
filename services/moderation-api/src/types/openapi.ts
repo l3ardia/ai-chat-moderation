@@ -73,11 +73,27 @@ export interface operations {
   squareupAuthorize: {
     requestBody: {
       content: {
-        "application/json": string[];
+        "application/json": {
+          messages: string[];
+        };
       };
     };
     responses: {
-      200: components["responses"]["GeneralResponse"];
+      /** @description Success response */
+      200: {
+        content: {
+          "application/json": {
+            success?: boolean;
+            violations?: ({
+                index?: number;
+                part?: string;
+                level?: string;
+                flag?: string;
+                description?: string | null;
+              })[];
+          };
+        };
+      };
       400: components["responses"]["BadRequest"];
     };
   };

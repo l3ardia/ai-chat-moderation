@@ -14,14 +14,41 @@ paths:
         content:
           application/json:
             schema:
+              type: object
               required:
                 - "messages"
-              type: array
-              items:
-                type: string            
+              properties:
+                messages:
+                  type: array
+                  items:
+                    type: string            
       responses:
         200:
-          $ref: '#/components/responses/GeneralResponse'  
+          description: "Success response"
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: false
+                properties:
+                  success:
+                    type: boolean
+                  violations:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        index:
+                          type: number
+                        part:
+                          type: string
+                        level:
+                          type: string
+                        flag:
+                          type: string
+                        description:
+                          type: string
+                          nullable: true
         400:
           $ref: '#/components/responses/BadRequest'  
 components:

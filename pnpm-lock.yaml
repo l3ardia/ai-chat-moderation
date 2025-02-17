@@ -107,10 +107,13 @@ importers:
         version: 1.4.5-lts.1
       openai:
         specifier: ^4.85.1
-        version: 4.85.1(ws@8.18.0)
+        version: 4.85.1(ws@8.18.0)(zod@3.24.2)
       winston:
         specifier: ^3.11.0
         version: 3.17.0
+      zod:
+        specifier: ^3.24.2
+        version: 3.24.2
     devDependencies:
       '@babel/core':
         specifier: ^7.21.4
@@ -8489,7 +8492,7 @@ packages:
       '@jsdevtools/ono': 7.1.3
     dev: false
 
-  /openai@4.85.1(ws@8.18.0):
+  /openai@4.85.1(ws@8.18.0)(zod@3.24.2):
     resolution: {integrity: sha512-jkX2fntHljUvSH3MkWh4jShl10oNkb+SsCj4auKlbu2oF4KWAnmHLNR5EpnUHK1ZNW05Rp0fjbJzYwQzMsH8ZA==}
     hasBin: true
     peerDependencies:
@@ -8509,6 +8512,7 @@ packages:
       formdata-node: 4.4.1
       node-fetch: 2.7.0
       ws: 8.18.0
+      zod: 3.24.2
     transitivePeerDependencies:
       - encoding
     dev: false
@@ -10406,3 +10410,7 @@ packages:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
     dev: true
+
+  /zod@3.24.2:
+    resolution: {integrity: sha512-lY7CDW43ECgW9u1TcT3IoXHflywfVqDYze4waEz812jR/bZ8FHDsl7pFQoSZTz5N+2NqRXs8GBwnAwo3ZNxqhQ==}
+    dev: false
