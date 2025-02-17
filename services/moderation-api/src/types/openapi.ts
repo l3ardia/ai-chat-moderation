@@ -85,7 +85,6 @@ export interface operations {
           "application/json": {
             success?: boolean;
             violations?: ({
-                index?: number;
                 part?: string;
                 level?: string;
                 flag?: string;

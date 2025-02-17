@@ -5,7 +5,6 @@ import { openai } from '../clients/openai';
 import { logger } from '../shared/logger';
 
 type ModerationDetails = {
-  index: number;
   part: string;
   level: 'warning' | 'danger' | 'info',
   flag: 'violence' | 'politic' | 'personalSensitiveData' | 'offensive';
@@ -20,7 +19,6 @@ export const moderateText = async (inputMessages: string[]): Promise<ModerateTex
   const responseFormat = z.object({
     violations: z.array(
       z.object({
-        index: z.number(),
         level: z.enum(['warning', 'danger', 'info']),
         part: z.string(),
         flag: z.enum(['violence', 'politic', 'personalSensitiveData', 'offensive']),
@@ -47,14 +45,15 @@ export const moderateText = async (inputMessages: string[]): Promise<ModerateTex
 
     Instructions:
     - The information might be sliced in separate messages but you have to find the relevance.
-    - Personal sensitive information include: Driver's license number, credit card number, BSB number and Bank account number and Date of birth. Be conservative with your usage of "personalSensitiveData". Personal Sensitive data must be explicitly presented. Just flag it if and only if the data is presented. for example "What is your BSB number?" is not flagged because still no BSB number is provided.
-    - Ignore Firstname, Surname, email and phone number, as they are not sensitive information.
+    - Personal sensitive information include: Driver's license number, credit card number, BSB number and Bank account number, Date of birth and PayID. Be conservative with your usage of "personalSensitiveData". Personal Sensitive data must be explicitly presented. Just flag it if and only if the data is presented. for example "What is your BSB number?" is not flagged because still no BSB number is provided.
+    - Ignore Firstname and Surname. They are not sensitive information.
     - Any offensive word needs to be flagged. Be conservative with your usage of "offensive" words. Offensive words should be explicitly presented. otherwise it is not offensive.
     - Any threat, violence, race and misogyny should be flagged as violence
     - Direct reference to political parties and names must be flagged
-    - result should contain the parts that flagged as violation. put message index (the line number starting from 0), including the part and flag.
+    - result should contain the parts that flagged as violation. write the part, level and flag.
     - add more details in description if needed.
-    - Note that to consider something as violation the data should be specifically provided. For example if user says that "I will give you my bank account information" but the user dosn't send the bank account number it is not considered as violation.
+    - Note that to consider something as violation the data should be explicitly provided. For example if user says that "I will give you my bank account information" but the user dosn't send the bank account number it is not considered as violation.
+    - Requesting personal info is not sensitive, providing the data is sensitive!
 
     Example input:
     - Fuck you
@@ -65,18 +64,23 @@ export const moderateText = async (inputMessages: string[]): Promise<ModerateTex
     {
       "success": false,
       "violation": [{
-        "index": 0,
         "part": "Fuck",
+        "level": "danger",
         "flag": "violance",
         "description": null
       },
       {
-        "index": 0,
         "part": "4242 4242 4242 4242",
+        "level": "danger",
         "flag": "personalSensitiveInfo",
         "description": "Credit card number found"
-      }      
-      ],
+      },
+      {
+        "part": "0499032024",
+        "level": "danger",
+        "flag": "personalSensitiveInfo",
+        "description": "Phone number found"
+      }],
     }
   `,
   });

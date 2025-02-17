@@ -38,8 +38,6 @@ paths:
                     items:
                       type: object
                       properties:
-                        index:
-                          type: number
                         part:
                           type: string
                         level:
