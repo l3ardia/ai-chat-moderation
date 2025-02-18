@@ -8,7 +8,7 @@ paths:
   /message/send:
     post:     
       description: Retrieve and store the message, moderate the message and send back the response
-      operationId: squareupAuthorize
+      operationId: sendMessage
       requestBody:
         required: true
         content:
