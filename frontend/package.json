@@ -4,9 +4,11 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "next build",
+    "build": "npm run dotenv:init && next build && npm run dotenv:cleanup",
     "start": "next start",
     "lint": "next lint",
+    "dotenv:init": "cp .env.$ENV .env.production 2>/dev/null || :",
+    "dotenv:cleanup": "rm -rf .env.production",
     "codegen:moderation-api": "openapi --input ../services/moderation-api/src/openapi.yml --output src/clients/moderation-api --client axios --name ModerationApi",
     "codegen": "npm run codegen:moderation-api"
   },
