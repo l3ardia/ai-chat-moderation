@@ -1,0 +1,20 @@
+*.js
+!jest.config.js
+*.d.ts
+node_modules
+
+# CDK asset staging directory
+cdk.out
+
+# Parcel build directories
+.cache
+.build
+
+cdk.context.json
+.aws-sam
+
+lambda-layers
+legacy-lambda-layers
+
+.env*
+!.env.sample
