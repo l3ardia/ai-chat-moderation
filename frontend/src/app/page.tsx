@@ -7,7 +7,6 @@ import {
   Textarea,
   VStack,
   Text,
-  HStack,
   Badge,
 } from "@chakra-ui/react";
 import { Tooltip } from "@/components/ui/tooltip";
