@@ -52,11 +52,11 @@ export const moderateText = async (inputMessages: string[]): Promise<ModerateTex
     - Direct reference to political parties and names must be flagged
     - result should contain the parts that flagged as violation. write the part, level and flag.
     - add more details in description if needed.
-    - Note that to consider something as violation the data should be explicitly provided. For example if user says that "I will give you my bank account information" but the user dosn't send the bank account number it is not considered as violation.
+    - Note that violations may be split over multiple lines or use special characters or white spaces to mask inputs.
     - Requesting personal info is not sensitive, providing the data is sensitive!
 
     Example input:
-    - Fuck you
+    - F*c k you
     - My credit card information is:
     - 4242 4242 4242 4242
     - My phone number is 0499032024
@@ -64,7 +64,7 @@ export const moderateText = async (inputMessages: string[]): Promise<ModerateTex
     {
       "success": false,
       "violation": [{
-        "part": "Fuck",
+        "part": "F*c k",
         "level": "danger",
         "flag": "violance",
         "description": null
