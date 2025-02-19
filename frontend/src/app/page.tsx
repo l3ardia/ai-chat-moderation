@@ -7,6 +7,8 @@ import {
   Textarea,
   VStack,
   Text,
+  HStack,
+  Badge,
 } from "@chakra-ui/react";
 import { Tooltip } from "@/components/ui/tooltip";
 import { moderationApi } from "@/clients/moderation-api/instance";
@@ -22,18 +24,25 @@ export default function Home() {
       description?: string | null;
     }[]
   >([]);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const sendMessage = async () => {
     if (message.trim() !== "") {
-      const newMessages = [...messages, message];
+      setLoading(true);
+      try {
+        const newMessages = [...messages, message];
 
-      const response = await moderationApi.default.sendMessage({
-        messages: newMessages,
-      });
+        const response = await moderationApi.default.sendMessage({
+          messages: newMessages,
+        });
 
-      setViolations(response.violations || []);
-      setMessages([...messages, message]);
-      setMessage("");
+        setViolations(response.violations || []);
+        setMessages([...messages, message]);
+        setMessage("");
+      } catch (error) {
+        console.error("Error sending message:", error);
+      }
+      setLoading(false);
     }
   };
 
@@ -94,7 +103,7 @@ export default function Home() {
               showArrow
               positioning={{ offset: { mainAxis: 4, crossAxis: 4 } }}
               contentProps={{
-                p: 2
+                p: 2,
               }}
             >
               <Box
@@ -124,6 +133,24 @@ export default function Home() {
       justifyContent="center"
     >
       <VStack gap={4} width="100%" maxW="lg">
+        {/* Highlight Explanation Section */}
+        <Box width="full" p={2} borderRadius="md" bg="gray.100">
+          <Text fontSize="sm" fontWeight="bold" mb={3}>
+            Highlight Colors:
+          </Text>
+          <VStack gap={3} alignItems={"flex-start"}>
+            <Badge bg="blue.200" px={2} py={1} borderRadius="md">
+              Info: Log (Optional) and investigate later
+            </Badge>
+            <Badge bg="yellow.200" px={2} py={1} borderRadius="md">
+              Warning: Log and investigate later
+            </Badge>
+            <Badge bg="red.200" px={2} py={1} borderRadius="md">
+              Danger: need to moderate immediately
+            </Badge>
+          </VStack>
+        </Box>
+
         <Textarea
           placeholder="Type your message..."
           value={message}
@@ -131,7 +158,13 @@ export default function Home() {
           size="lg"
           p={2}
         />
-        <Button colorPalette={"teal"} onClick={sendMessage} width="full">
+        <Button
+          colorPalette={"teal"}
+          onClick={sendMessage}
+          width="full"
+          loading={loading}
+          loadingText="Sending..."
+        >
           Send Message
         </Button>
         <Box
@@ -142,7 +175,7 @@ export default function Home() {
           overflowY="auto"
           maxH="300px"
         >
-          {messages.map((msg, index) => (
+          {[...messages].reverse().map((msg, index) => (
             <Box key={index} p={2} borderBottom="1px solid #ddd">
               {highlightMessage(msg)}
             </Box>
