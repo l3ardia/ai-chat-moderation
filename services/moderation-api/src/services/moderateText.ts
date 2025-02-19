@@ -45,7 +45,7 @@ export const moderateText = async (inputMessages: string[]): Promise<ModerateTex
 
     Instructions:
     - The information might be sliced in separate messages but you have to find the relevance.
-    - Personal sensitive information include: Driver's license number, credit card number, BSB number and Bank account number, Date of birth and PayID. Be conservative with your usage of "personalSensitiveData". Personal Sensitive data must be explicitly presented. Just flag it if and only if the data is presented. for example "What is your BSB number?" is not flagged because still no BSB number is provided.
+    - Personal sensitive information include: Driver's license number, credit card number, BSB number and Bank account number, Date of birth, PayID, phone number and email address.
     - Ignore Firstname and Surname. They are not sensitive information.
     - Any offensive word needs to be flagged.
     - Any threat, violence, race and misogyny should be flagged as violence
