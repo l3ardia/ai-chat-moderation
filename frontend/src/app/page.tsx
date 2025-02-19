@@ -8,6 +8,7 @@ import {
   VStack,
   Text,
   Badge,
+  Heading,
 } from "@chakra-ui/react";
 import { Tooltip } from "@/components/ui/tooltip";
 import { moderationApi } from "@/clients/moderation-api/instance";
@@ -132,8 +133,14 @@ export default function Home() {
       justifyContent="center"
     >
       <VStack gap={4} width="100%" maxW="lg">
-        {/* Highlight Explanation Section */}
+        <Heading size={"3xl"}>AI chat moderation</Heading>
+        <Text as={"h3"}></Text>
+
         <Box width="full" p={2} borderRadius="md" bg="gray.100">
+          <Text fontSize="sm" mb={3}>
+            This AI tool moderates messages for violations, offensive language,
+            political discussions, and the sharing of sensitive information.
+          </Text>
           <Text fontSize="sm" fontWeight="bold" mb={3}>
             Highlight Colors:
           </Text>
@@ -145,7 +152,7 @@ export default function Home() {
               Warning: Log and investigate later
             </Badge>
             <Badge bg="red.200" px={2} py={1} borderRadius="md">
-              Danger: need to moderate immediately
+              Danger: need to take action immediately
             </Badge>
           </VStack>
         </Box>
