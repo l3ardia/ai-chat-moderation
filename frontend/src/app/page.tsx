@@ -138,21 +138,22 @@ export default function Home() {
 
         <Box width="full" p={2} borderRadius="md" bg="gray.100">
           <Text fontSize="sm" mb={3}>
-            This AI tool moderates messages for violations, offensive language,
-            political discussions, and the sharing of sensitive information.
+            This AI-powered tool monitors messages for potential policy
+            violations, including offensive language, inappropriate discussions,
+            and the sharing of sensitive information.
           </Text>
           <Text fontSize="sm" fontWeight="bold" mb={3}>
-            Highlight Colors:
+            Highlight Categories:
           </Text>
           <VStack gap={3} alignItems={"flex-start"}>
             <Badge bg="blue.200" px={2} py={1} borderRadius="md">
-              Info: Log (Optional) and investigate later
+              <b>Info (Blue):</b> Not blocked, flagged for future review.
             </Badge>
             <Badge bg="yellow.200" px={2} py={1} borderRadius="md">
-              Warning: Log and investigate later
+              <b>Warning (Yellow):</b> Blocked, moderate risk
             </Badge>
             <Badge bg="red.200" px={2} py={1} borderRadius="md">
-              Danger: need to take action immediately
+              <b>Danger (Red):</b> Blocked, high risk
             </Badge>
           </VStack>
         </Box>

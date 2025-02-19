@@ -6,7 +6,7 @@ import { logger } from '../shared/logger';
 
 type ModerationDetails = {
   part: string;
-  level: 'warning' | 'danger' | 'info',
+  level: 'warning' | 'danger' | 'info';
   flag: 'violence' | 'politic' | 'personalSensitiveData' | 'offensive';
   description?: string;
 };
@@ -22,7 +22,7 @@ export const moderateText = async (inputMessages: string[]): Promise<ModerateTex
         level: z.enum(['warning', 'danger', 'info']),
         part: z.string(),
         flag: z.enum(['violence', 'politic', 'personalSensitiveData', 'offensive']),
-        description: z.string().nullable()
+        description: z.string().nullable(),
       }),
     ),
   });
@@ -32,13 +32,13 @@ export const moderateText = async (inputMessages: string[]): Promise<ModerateTex
   messages.push({
     role: 'system',
     content: `
-          You are a model that moderates messages against sending violence, offensive phrases, political advices and personal sensitive infos.
+          You are a model that moderates messages between a car buyer & seller against sending violence, offensive phrases, inappropriate content, political advices and personal sensitive infos.
         `,
   });
   messages.push({
     role: 'user',
     content: `
-    You are given array of messages. concatenate them and find any instance of violence, personal sensitive information, offensive text and political advices.
+    You are given array of messages. concatenate them and find any instance of violence, offensive phrases, inappropriate content, political advices and personal sensitive infos.
 
     Messages: 
     - ${inputMessages.map((msg) => msg.replaceAll('\n', '')).join('\n -')}"
@@ -47,7 +47,7 @@ export const moderateText = async (inputMessages: string[]): Promise<ModerateTex
     - The information might be sliced in separate messages but you have to find the relevance.
     - Personal sensitive information include: Driver's license number, credit card number, BSB number and Bank account number, Date of birth and PayID. Be conservative with your usage of "personalSensitiveData". Personal Sensitive data must be explicitly presented. Just flag it if and only if the data is presented. for example "What is your BSB number?" is not flagged because still no BSB number is provided.
     - Ignore Firstname and Surname. They are not sensitive information.
-    - Any offensive word needs to be flagged. Be conservative with your usage of "offensive" words. Offensive words should be explicitly presented. otherwise it is not offensive.
+    - Any offensive word needs to be flagged.
     - Any threat, violence, race and misogyny should be flagged as violence
     - Direct reference to political parties and names must be flagged
     - result should contain the parts that flagged as violation. write the part, level and flag.
@@ -86,19 +86,15 @@ export const moderateText = async (inputMessages: string[]): Promise<ModerateTex
   });
 
   const completion = await openai.beta.chat.completions.parse({
-    model: "gpt-4o-mini",
+    model: 'gpt-4o-mini',
     messages,
     max_tokens: 3000,
-    response_format: zodResponseFormat(
-      responseFormat,
-      "moderate_chat_response"
-    ),
+    response_format: zodResponseFormat(responseFormat, 'moderate_chat_response'),
   });
-  
-  logger.info("moderateText completion", {
+
+  logger.info('moderateText completion', {
     tokens: completion.usage?.total_tokens,
   });
 
   return completion.choices[0].message.parsed as ModerateTextResponse;
-  
 };
