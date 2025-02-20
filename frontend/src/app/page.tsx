@@ -147,13 +147,13 @@ export default function Home() {
           </Text>
           <VStack gap={3} alignItems={"flex-start"}>
             <Badge bg="blue.200" px={2} py={1} borderRadius="md">
-              <b>Info (Blue):</b> Not blocked, flagged for future review.
+              <b>Monitored (Blue):</b> Not blocked, flagged for future review.
             </Badge>
             <Badge bg="yellow.200" px={2} py={1} borderRadius="md">
-              <b>Warning (Yellow):</b> Blocked, moderate risk
+              <b>Moderate Risk (Yellow):</b> Blocked, moderate risk
             </Badge>
             <Badge bg="red.200" px={2} py={1} borderRadius="md">
-              <b>Danger (Red):</b> Blocked, high risk
+              <b>High Risk (Red):</b> Blocked, high risk
             </Badge>
           </VStack>
         </Box>
