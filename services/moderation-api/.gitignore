@@ -5,5 +5,5 @@ coverage
 .volumes
 keys
 .env*
-
+!.env.sample
 node_modules/
